@@ -11,6 +11,11 @@ package "openvpn" do
   action :install
 end
 
+service "openvpn" do
+  supports :restart => true
+  action :enable
+end
+
 package "bridge-utils" do
   action :install
 end
@@ -55,5 +60,16 @@ end
 template "/etc/openvpn/down.sh" do
   source "down.sh.erb"
   mode 0755
+end
+
+template "/etc/openvpn/server.conf" do
+  source "server.conf.erb"
+  mode 0755
+  notifies :restart, resources(:service => "openvpn")
+end
+
+service "openvpn" do
+  supports :restart => true
+  action :start
 end
 
