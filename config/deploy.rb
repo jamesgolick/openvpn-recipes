@@ -14,6 +14,12 @@ set :chef_config_path,         "/etc/chef/solo.rb"
 
 set :cookbooks,             %w( openvpn )
 
+set :country,  "Canada"
+set :province, "Quebec"
+set :city,     "Montreal"
+set :company,  "Nine Lives"
+set :email,    "jamesgolick@gmail.com"
+
 task :sync_cookbooks do
   sudo "mkdir -p #{cookbook_path}"
   `tar --file=build/cookbooks.tar.gz -czv cookbooks`
@@ -24,8 +30,16 @@ task :sync_cookbooks do
 end
 
 task :write_json do
+  dna = {
+    :recipes => cookbooks,
+    :ca_country => country,
+    :ca_province => province,
+    :ca_city => city,
+    :ca_company => company,
+    :ca_email => email
+  }
   sudo "mkdir -p /etc/chef"
-  put({:recipes => cookbooks}.to_json, json_staging_path)
+  put dna.to_json, json_staging_path
   sudo "mv #{json_staging_path} #{path_to_dna}"
 end
 

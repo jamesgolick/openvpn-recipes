@@ -21,3 +21,20 @@ execute "Add br interface" do
   not_if  "cat /etc/network/interfaces | grep -q #{line}"
 end
 
+directory "/etc/openvpn/easy-rsa" do
+  action :create
+  owner  "root"
+  group  "admin"
+end
+
+execute "copy easy-rsa files" do
+  command "cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* /etc/openvpn/easy-rsa"
+  not_if  "test -f /etc/openvpn/easy-rsa/openssl.cnf"
+end
+
+template "/etc/openvpn/easy-rsa/vars" do
+  source "vars.erb"
+  mode   0755
+end
+
+
