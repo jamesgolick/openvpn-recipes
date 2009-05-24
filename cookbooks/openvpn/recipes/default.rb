@@ -62,6 +62,11 @@ template "/etc/openvpn/down.sh" do
   mode 0755
 end
 
+execute "setup ip_forwarding" do
+  command "echo 1 > /proc/sys/net/ipv4/ip_forward"
+  not_if  "cat /proc/sys/net/ipv4/ip_forward | grep -q 1"
+end
+
 template "/etc/openvpn/server.conf" do
   source "server.conf.erb"
   mode 0755
