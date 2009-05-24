@@ -5,7 +5,7 @@ role :host,             "integrity.giraffesoftlabs.com"
 set :user,                  "james"
 set :cookbook_path,         "/var/chef/cookbooks"
 set :cookbooks_archive,     "/home/#{user}/cookbooks.tar.gz"
-set :cookbook_staging_path, "/home/#{user}/cookbooks.tar.gz"
+set :cookbook_staging_path, "/home/#{user}/cookbooks"
 set :json_staging_path,     "/home/#{user}/dna.json"
 set :chef_bin,              "/usr/bin/chef-solo"
 set :path_to_dna,           "/etc/chef/dna.json"
@@ -27,7 +27,7 @@ task :write_json do
 end
 
 task :run_chef do
-  sudo "#{chef-bin} -j #{path_to_dna}"
+  sudo "#{chef_bin} -j #{path_to_dna}"
 end
 
 task :bootstrap do
