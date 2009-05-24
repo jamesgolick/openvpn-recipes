@@ -2,13 +2,13 @@ require 'activesupport'
 
 role :host,             "integrity.giraffesoftlabs.com"
 
-set :user,                  "james"
-set :cookbook_path,         "/var/chef/cookbooks"
-set :cookbooks_archive,     "/home/#{user}/cookbooks.tar.gz"
-set :cookbook_staging_path, "/home/#{user}/cookbooks"
-set :json_staging_path,     "/home/#{user}/dna.json"
-set :chef_bin,              "/usr/bin/chef-solo"
-set :path_to_dna,           "/etc/chef/dna.json"
+set :user,                     "james"
+set :cookbook_path,            "/var/chef/cookbooks"
+set :cookbooks_archive,        "/home/#{user}/cookbooks.tar.gz"
+set :cookbook_staging_path,    "/home/#{user}/cookbooks"
+set :json_staging_path,        "/home/#{user}/dna.json"
+set :chef_bin,                 "/usr/bin/chef-solo"
+set :path_to_dna,              "/etc/chef/dna.json"
 set :chef_config_staging_path, "/home/#{user}/solo.rb"
 set :chef_config_path,         "/etc/chef/solo.rb"
 
