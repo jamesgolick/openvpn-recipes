@@ -36,7 +36,8 @@ task :write_json do
     :ca_province => province,
     :ca_city => city,
     :ca_company => company,
-    :ca_email => email
+    :ca_email => email,
+    :user  => user
   }
   sudo "mkdir -p /etc/chef"
   put dna.to_json, json_staging_path
@@ -64,4 +65,8 @@ task :bootstrap do
 end
 
 before :run_chef, :bootstrap, :sync_cookbooks, :write_json, :write_chef_config
+
+task :generate_client_package do
+  sudo "source /etc/openvpn/easy-rsa/vars && /etc/openvpn/easy-rsa/pkitool client"
+end
 

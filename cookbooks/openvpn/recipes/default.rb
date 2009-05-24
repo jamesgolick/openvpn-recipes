@@ -73,6 +73,15 @@ template "/etc/openvpn/server.conf" do
   notifies :restart, resources(:service => "openvpn")
 end
 
+template "/etc/openvpn/client.conf" do
+  source "client.conf.erb"
+end
+
+template "/etc/openvpn/easy-rsa/make_client_package" do
+  source "make_client_package.erb"
+  mode 0755
+end
+
 service "openvpn" do
   supports :restart => true
   action :start
