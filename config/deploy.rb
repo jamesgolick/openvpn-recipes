@@ -9,6 +9,9 @@ set :cookbook_staging_path, "/home/#{user}/cookbooks"
 set :json_staging_path,     "/home/#{user}/dna.json"
 set :chef_bin,              "/usr/bin/chef-solo"
 set :path_to_dna,           "/etc/chef/dna.json"
+set :chef_config_staging_path, "/home/#{user}/solo.rb"
+set :chef_config_path,         "/etc/chef/solo.rb"
+
 set :cookbooks,             %w( openvpn )
 
 task :sync_cookbooks do
@@ -26,6 +29,18 @@ task :write_json do
   sudo "mv #{json_staging_path} #{path_to_dna}"
 end
 
+task :write_chef_config do
+  str =<<-END
+cookbook_path    "/var/chef/cookbooks"
+log_level         :info
+file_store_path  "/var/chef"
+file_cache_path  "/var/chef"
+Chef::Log::Formatter.show_time = false
+  END
+  put str, chef_config_staging_path
+  sudo "mv #{chef_config_staging_path} #{chef_config_path}"
+end
+
 task :run_chef do
   sudo "#{chef_bin} -j #{path_to_dna}"
 end
@@ -34,5 +49,5 @@ task :bootstrap do
   sudo "test -f #{chef_bin} || sudo gem install chef --source http://gems.rubyforge.org --source http://gems.opscode.com"
 end
 
-before :run_chef, :bootstrap, :sync_cookbooks, :write_json
+before :run_chef, :bootstrap, :sync_cookbooks, :write_json, :write_chef_config
 
