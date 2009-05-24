@@ -25,7 +25,7 @@ end
 
 task :write_json do
   sudo "mkdir -p /etc/chef"
-  put({:cookbooks => cookbooks}.to_json, json_staging_path)
+  put({:recipes => cookbooks}.to_json, json_staging_path)
   sudo "mv #{json_staging_path} #{path_to_dna}"
 end
 
