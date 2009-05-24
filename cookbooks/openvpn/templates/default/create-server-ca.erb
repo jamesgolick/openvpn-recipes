@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /etc/openvpn/easy-rsa/ ## move to the easy-rsa directory
+sudo chown -R root:admin .  ## make this directory writable by the system administrators
+source ./vars ## execute your new vars file
+./clean-all  ## Setup the easy-rsa directory (Deletes all keys)
+./build-dh  ## takes a while consider backgrounding
+./pkitool --initca ## creates ca cert and key
+./pkitool --server server ## creates a server cert and key
+cd keys
+openvpn --genkey --secret ta.key  ## Build a TLS key
+cp server.crt server.key ca.crt dh1024.pem ta.key ../../
+

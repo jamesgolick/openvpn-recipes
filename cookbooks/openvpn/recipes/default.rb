@@ -18,7 +18,7 @@ end
 execute "Add br interface" do
   line = "auto lo br0"
   command "echo '#{line}' >> /etc/network/interfaces && /etc/init.d/networking restart"
-  not_if  "cat /etc/network/interfaces | grep -q #{line}"
+  not_if  "cat /etc/network/interfaces | grep -q '#{line}'"
 end
 
 directory "/etc/openvpn/easy-rsa" do
@@ -35,6 +35,16 @@ end
 template "/etc/openvpn/easy-rsa/vars" do
   source "vars.erb"
   mode   0755
+end
+
+template "/etc/openvpn/easy-rsa/create-server-ca" do
+  source "create-server-ca.erb"
+  mode   0755
+end
+
+execute "setup server CA" do
+  command "/etc/openvpn/easy-rsa/create-server-ca"
+  creates "/etc/openvpn/server.crt"
 end
 
 

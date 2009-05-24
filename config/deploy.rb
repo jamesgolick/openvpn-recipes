@@ -14,7 +14,7 @@ set :chef_config_path,         "/etc/chef/solo.rb"
 
 set :cookbooks,             %w( openvpn )
 
-set :country,  "Canada"
+set :country,  "CA" # MUST BE TWO CHARS
 set :province, "Quebec"
 set :city,     "Montreal"
 set :company,  "Nine Lives"
