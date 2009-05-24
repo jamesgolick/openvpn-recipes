@@ -47,4 +47,13 @@ execute "setup server CA" do
   creates "/etc/openvpn/server.crt"
 end
 
+template "/etc/openvpn/up.sh" do
+  source "up.sh.erb"
+  mode 0755
+end
+
+template "/etc/openvpn/down.sh" do
+  source "down.sh.erb"
+  mode 0755
+end
 
