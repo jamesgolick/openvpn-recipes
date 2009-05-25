@@ -1,0 +1,4 @@
+The code in this repository will help you get OpenVPN running on Ubuntu (and maybe other distros, but untested, so ymmv). A VPN tunnel is a great way to beat geofencing.
+
+For usage info, check out the tutorial at http://jamesgolick.com/2009/5/24/how-to-watch-hulu-from-canada-or-anywhere-else.html
+
