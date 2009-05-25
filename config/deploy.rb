@@ -1,6 +1,7 @@
 require 'activesupport'
 
-role :host,             "integrity.giraffesoftlabs.com"
+set :server_address,    "integrity.giraffesoftlabs.com"
+role :host,             server_address
 
 set :user,                     "james"
 set :cookbook_path,            "/var/chef/cookbooks"
@@ -32,6 +33,7 @@ end
 
 task :write_json do
   dna = {
+    :host => server_address,
     :recipes => cookbooks,
     :ca_country => country,
     :ca_province => province,
