@@ -21,6 +21,7 @@ set :company,  "Nine Lives"
 set :email,    "jamesgolick@gmail.com"
 
 task :sync_cookbooks do
+  ensure_build_dir_exists
   sudo "mkdir -p #{cookbook_path}"
   `tar --file=build/cookbooks.tar.gz -czv cookbooks`
   put  File.read("build/cookbooks.tar.gz"), cookbooks_archive
@@ -67,7 +68,12 @@ end
 before :run_chef, :bootstrap, :sync_cookbooks, :write_json, :write_chef_config
 
 task :generate_client_package do
+  ensure_build_dir_exists
   sudo "/etc/openvpn/easy-rsa/make_client_package"
   get "/home/#{user}/client.tar.gz", "build/client.tar.gz"
+end
+
+def ensure_build_dir_exists
+  FileUtils.mkdir_p "build"
 end
 
