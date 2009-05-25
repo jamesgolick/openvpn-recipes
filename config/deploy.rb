@@ -67,6 +67,7 @@ end
 before :run_chef, :bootstrap, :sync_cookbooks, :write_json, :write_chef_config
 
 task :generate_client_package do
-  sudo "source /etc/openvpn/easy-rsa/vars && /etc/openvpn/easy-rsa/pkitool client"
+  sudo "/etc/openvpn/easy-rsa/make_client_package"
+  get "/home/#{user}/client.tar.gz", "build/client.tar.gz"
 end
 
